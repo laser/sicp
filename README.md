@@ -8,7 +8,11 @@ http://www.aduni.org/courses/sicp/index.php?view=cw
 
 On a mac:
 
+```
 brew install mit-scheme
+```
+
+If you'd like tab-completion in the REPL, follow the steps [in this Stack Overflow answer](http://stackoverflow.com/questions/11908746/mit-scheme-repl-with-command-line-history-and-tab-completion). I've added the `repl` target to the Makefile for you. Enjoy.
 
 ## How to run tests
 
