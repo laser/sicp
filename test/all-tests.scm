@@ -1,5 +1,5 @@
 (load "lib/test-manager/load.scm")
 ;
-; To test add the test classes below
+; Add more test classes here, if desired
 ;
-(load "test/pset-01.scm")
+(load "test/Problem_Set_01.scm")

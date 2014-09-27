@@ -26,7 +26,7 @@ mit-scheme --batch-mode --eval "(set! load/suppress-loading-message? #t)" --load
 1 tests, 0 failures, 0 errors.
 ```
 
-For more documentation (how to write assertions, etc.), check out [the test-manager docs](http://web.mit.edu/~axch/www/testing.html). I've stubbed `pset-01.scm` out in the `src` and `test` directories; follow this convention for future assignments.
+For more documentation (how to write assertions, etc.), check out [the test-manager docs](http://web.mit.edu/~axch/www/testing.html). I've stubbed `Problem_Set_01.scm` out in the `src` and `test` directories; follow this convention for future assignments.
 
 ## Branching Strategy
 
