@@ -18,7 +18,7 @@
   (lambda (x y)
     (* (spindle x)
        (+ (mutilate y)
-	  (spindle x y)))))
+	  (spindle x)))))
 
 (define spindle
   (lambda (w) (* w w)))
@@ -29,6 +29,34 @@
 
 (define fact
   (lambda (n)
-    (if (= n 0)		
-	m
-	(* n (fact (- n 1))))))
+    (if (= n 0)
+      1
+	   (* n (fact (- n 1))))))
+
+(define comb
+  (lambda (n k)
+    (/
+      (fact n)
+      (* (fact k) (fact (- n k))))))
+
+(define cube
+  (lambda (x)
+    (* x x x)))
+
+(define sum-of-cubes
+  (lambda (x y)
+    (+ (cube x) (cube y))))
+
+(define biggest-of-three max)
+
+(define cube-biggest-of-three
+  (lambda (x y z)
+    (biggest-of-three (cube x) (cube y) (cube z))))
+
+(define f
+  (lambda (x a b c d e)
+    (+
+      a
+      (* b x)
+      (* c (square x))
+      (* d (cube x)))))
