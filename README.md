@@ -1,4 +1,4 @@
-# cis194
+# The Structure and Interpretation of Computer Programs
 
 Homework solutions for ADUni.org's The Structure and Interpretation of Computer Programs problem sets:
 
