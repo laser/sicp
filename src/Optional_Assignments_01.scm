@@ -35,25 +35,37 @@
 ;; Exercise 1.7
 ;;
 ;;
-(define (good-enough? guess x)
-  (< (/ (abs (- (square guess) x)) guess) 0.001))
 
 ;; Improve a guess by averaging the guess and the result
 ;; of dividing the radicand by the guess.
 ;;
-(define (improve guess x)
-  (average guess (/ x guess)))
 
-(define (average x y)
-  (/ (+ x y) 2))
-
-;; Recurse, improving guess if our guess was not good
-;; enough.
-;;
-(define (sqrtz guess x)
-  (if (good-enough? guess x)
-    guess
-    (sqrtz (improve guess x) x)))
-
-(define (sqrt x)
+(define (find-square-root x)
+  (define (sqrtz guess x)
+    (define (improve guess x)
+      (average guess (/ x guess)))
+    (define (average x y)
+      (/ (+ x y) 2))
+    (define (good-enough? guess x)
+      (< (/ (abs (- (* guess guess) x)) guess) 0.001))
+    (if (good-enough? guess x)
+      guess
+      (sqrtz (improve guess x) x)))
   (sqrtz 1.0 x))
+
+
+;; Exercise 1.8
+;;
+;; Write a function that finds the cube-root of a given
+;; number. The "improve" function is given.
+
+(define (find-cube-root x)
+  (define (cubez guess x)
+    (define (improve guess x)
+      (/ (+ (/ x (* guess guess)) (* 2 guess)) 3))
+    (define (good-enough? guess x)
+      (< (/ (abs (- (* guess guess guess) x)) guess) 0.001))
+    (if (good-enough? guess x)
+      guess
+    (cubez (improve guess x) x)))
+  (cubez 1.0 x))
