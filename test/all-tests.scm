@@ -3,3 +3,4 @@
 ; Add more test classes here, if desired
 ;
 (load "test/Problem_Set_01.scm")
+(load "test/Problem_Set_02.scm")
