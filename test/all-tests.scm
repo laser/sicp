@@ -4,5 +4,5 @@
 ;
 (load "test/Problem_Set_01.scm")
 (load "test/Optional_Assignments_01.scm")
-;(load "test/Problem_Set_02.scm")
+(load "test/Problem_Set_02.scm")
 (load "test/Optional_Assignments_02.scm")
