@@ -89,3 +89,12 @@
       k
       (find-estimate-pi (+ k 1))))
 
+(define (atan-cf k x)
+  (define (N k) (square (* k x)))
+  (define (D k) (+ (* 2 k) 1))
+  (/ x (+ 1 (cont-frac-i N D k))))
+
+(define (find-atan-k k x)
+  (if (< (abs (- (atan x) (atan-cf k x))) 0.001)
+      k
+      (find-atan-k (+ k 1) x)))
