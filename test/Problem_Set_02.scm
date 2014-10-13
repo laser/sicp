@@ -4,6 +4,7 @@
 (define (id x) x)
 (define (next x) (+ x 1))
 (define PI 3.14159)
+(define GOLDEN_RATIO 1.61803)
 (define (one x) 1)
 
 (in-test-group
@@ -18,8 +19,11 @@
     (assert-true (< (abs (- PI (wallis-product))) 0.001) "ex: 1.31: write a 'wallis-product' function to approximate PI using 'product'")
     (assert-equal 625 ((repeated square 2) 5) "Problem 5: evaluate")
     (assert-equal 4294967296 ((repeated square 5) 2) "Problem 5: evaluate")
-    (assert-true (< (abs (- 0.618 (cont-frac-i one one 10))) .0001) "Sufficiently close to the golden ratio approximation of 0.618")
+    (assert-true (< (abs (- 0.618 (cont-frac-i one one 10))) .0001) "Sufficiently close to inverse of the golden ratio approximation of 0.618")
     (assert-true (< (abs (- PI (estimate-pi 997))) .001) "Brouncker's approximation should be good to 3 decimal places")
+    (assert-true (< (abs (- GOLDEN_RATIO (square-root-acc 20 1))) .0001) "Accurate to 4 decimal places with k of 20")
+    (assert-true (< (abs (- (/ 1 GOLDEN_RATIO) (repeated-build 10 1 1 0))) 0.0001) "Sufficiently accurate at 4 decimal places")
+    (assert-equal 1/2 ((r 2) 0) "Exercise 14")
   )
   (define-test (atan-tests)
     (define (compare k x) (< (abs (- (atan x) (atan-cf k x))) .001))

@@ -98,3 +98,34 @@
   (if (< (abs (- (atan x) (atan-cf k x))) 0.001)
       k
       (find-atan-k (+ k 1) x)))
+
+(define (nested-acc op r term k)
+  (define (nested-iter i)
+    (if (> i k)
+        r
+        ((op i) (term i) (nested-iter (+ i 1)))))
+    (nested-iter 1))
+
+; for i = 1, we want to return sqrt, i = 2 a +, ...
+; choose r value that doesn't affect the equation (in this case addition, so additive identity which is zero)
+; for term, we're always return x
+(define (square-root-acc k x)
+  (nested-acc (lambda (i) (if (odd? i) (lambda (a b) (sqrt b)) +))
+              0
+              (lambda (i) x)
+              k))
+
+(define (build n d b)
+  (/ n (+ d b)))
+
+(define (repeated-build k n d b)
+  ((repeated (lambda (x) (build n d x)) k) b))
+
+(define (find-inverse-golden k)
+  (if (< (abs (- 0.618 (repeated-build k 1 1 0))) 0.0001)
+      k
+      (find-inverse-golden (+ k 1))))
+
+(define (r k)
+  (lambda (x)
+    (repeated-build k 1 1 x)))
