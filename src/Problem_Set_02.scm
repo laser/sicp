@@ -110,3 +110,102 @@
 ;;
 (define (product-positive-integers-relatively-prime n)
   (filtered-accumulate (lambda (x) (= 1 (gcd x n))) * 1 id 1 step (- n 1)))
+
+;; Ex 5: Procedure 'repeated' is defined as
+;;
+(define (repeated p n)
+  (cond ((= n 0) (lambda (x) x))
+        ((= n 1) p)
+        (else (lambda (x) (p ((repeated p (- n 1)) x))))))
+
+;; Determine the value of the expressions:
+;; ((repeated square 2) 5)
+;;
+;(((lambda (x) (square ((repeated square (-n 1)) x)))))
+;(((lambda (x) (square (square x)))))
+;(square (square 5))
+;625
+
+;;((repeated square 5) 2)
+;;(((lambda (x) (square ((repeated square (1)) x)))))
+;;(((lambda (x) (square (square (square (square (square 2))))))))
+;;4294967296
+
+
+;; Ex 6: Suppose that 'n' and 'd' are procedures of one
+;; argument (the term index) that return the n_i and d_i of
+;; the terms of the continued fraction.
+;;
+;;(define (f (/ n1 (+ d1 (n2 / (+ d2 (n3 / (+ d3 ...))))))))
+;;
+;; Define procedures 'cont-frac-recur' and 'cont-frac-iter'
+;; such that evaluating (cont-frac-recur n d k) and
+;; (cont-frac-iter n d k) each compute the value of the
+;; k-term finite continued fraction. Check your procedures
+;; by approximating 1/THETA using:
+;;
+;; (cont-frac (lambda (i) 1) (lambda (i) 1) k)
+;;
+;; ...for successive values of k. How large must you make
+;; k in order to get an approximation that is accurate to 4
+;; decimal places?
+;;
+;; requires 8 iterations
+(define (cont-frac-iter n d k)
+  (define (iter a result)
+    (if (> a k)
+      result
+      (/
+        (n a)
+        (+
+          (d a)
+          (iter (+ a 1) result)))))
+  (iter 1 0))
+
+;; requires 8 iterations
+(define (cont-frac-recur n d k)
+  (if (= k 0)
+    0
+    (/
+      (n k)
+      (+
+        (d k)
+        (cont-frac-recur n d (- k 1))))))
+
+;; Ex 7: For approximating PI using the Brouncker formula:
+;;
+(define (estimate-pi k)
+  (/ 4 (+ (brouncker k) 1)))
+
+(define (square x) (* x x))
+
+(define (brouncker k)
+  (cont-frac-iter (lambda (i) (square (- (* 2 i) 1)))
+                  (lambda (i) 2)
+                  k))
+
+(define (estimate-pi-recur k)
+  (/ 4 (+ (brouncker-recur k) 1)))
+
+(define (brouncker-recur k)
+  (cont-frac-recur (lambda (i) (square (- (* 2 i) 1)))
+                   (lambda (i) 2)
+                   k))
+
+;; Ex 8/9: Define a procedure (atan-cf k x) that computes
+;; an approximation to the inverse tangent function based
+;; on a k-term continued fraction representation of arctan
+;; x given as:
+;;
+;; arctan x = (/ x (+ 1 (/ (square (* 1 x)) (+ 3 (/ (square (* 2 x)) ...
+;;
+(define (arctan-cf k x)
+  (define (n i)
+    (if (= i 1)
+      x
+      (square (* (- i 1) x))))
+  (define (d i)
+    (if (= i 1)
+      1
+      (- (* 2 i) 1)))
+  (cont-frac-iter n d k))
