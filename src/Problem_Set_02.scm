@@ -152,25 +152,20 @@
 ;;
 ;; requires 8 iterations
 (define (cont-frac-iter n d k)
-  (define (iter a result)
-    (if (> a k)
+  (define (iter i result)
+    (if (= i 0)
       result
-      (/
-        (n a)
-        (+
-          (d a)
-          (iter (+ a 1) result)))))
-  (iter 1 0))
+      (iter (- i 1) (/ (n i) (+ (d i) result)))))
+  (iter k 0))
 
 ;; requires 8 iterations
 (define (cont-frac-recur n d k)
-  (if (= k 0)
-    0
-    (/
-      (n k)
-      (+
-        (d k)
-        (cont-frac-recur n d (- k 1))))))
+  (define (helper i acc)
+    (if (> i k)
+      acc
+      (/ (n i)
+         (+ (d i) (helper (+ i 1) acc)))))
+  (helper 1 0))
 
 ;; Ex 7: For approximating PI using the Brouncker formula:
 ;;
@@ -183,14 +178,6 @@
   (cont-frac-iter (lambda (i) (square (- (* 2 i) 1)))
                   (lambda (i) 2)
                   k))
-
-(define (estimate-pi-recur k)
-  (/ 4 (+ (brouncker-recur k) 1)))
-
-(define (brouncker-recur k)
-  (cont-frac-recur (lambda (i) (square (- (* 2 i) 1)))
-                   (lambda (i) 2)
-                   k))
 
 ;; Ex 8/9: Define a procedure (atan-cf k x) that computes
 ;; an approximation to the inverse tangent function based
