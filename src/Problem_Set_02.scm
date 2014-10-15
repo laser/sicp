@@ -116,3 +116,46 @@
 ;; (= 625 ((repeated square 2) 5))
 
 ;; Exercise 6
+
+(define (cont-frac-i n d k)
+  (define (cf-iter cnt result)
+    (if (= cnt 0)
+        result
+        (cf-iter (- cnt 1) (/ (n cnt) (+ (d cnt) result)))))
+  (cf-iter k 0))
+
+;;; The math on the recursive version doesn't seem to equal the iterative one...??
+
+(define (cont-frac-r n d k)
+  (define (recursive n d k cnt)
+   (if (= cnt k)
+       0
+       (/ (n cnt) (+ (d cnt) (recursive n d k (+ cnt 1))))))
+  (recursive n d k 1))
+
+;; Exercise 7
+
+(define (brouncker k)
+  (cont-frac-i (lambda (i) (square (- (* 2 i) 1)))
+               (lambda (i) 2)
+               k))
+
+(define (estimate-pi k)
+  (/ 4 (+ (brouncker k) 1)))
+
+;; Exercise 8
+
+(define (atan-cf k x)
+  (cont-frac-i (lambda (i) (if (= i 1) x (square (* (- i 1) x))))
+               (lambda (i) (- (* i 2) 1))
+               k))
+
+;; Exercise 9
+
+(define (test-tangent x times)
+  (< (abs (- (atan x) (atan-cf times x))) .0001))
+
+;;; The following is true
+(test-tangent 30 155)
+
+;; Exercise 10
