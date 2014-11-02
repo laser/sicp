@@ -159,3 +159,6 @@
 (test-tangent 30 155)
 
 ;; Exercise 10
+
+(define (nested-acc op r term k)
+  )

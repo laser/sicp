@@ -52,23 +52,23 @@
              (cons new-card (hand-card-list hand))))
 
 ;;; The interactive strategy. Doesn't work in guile :(
-(define (hit? your-hand opponent-up-card)
-  (newline)
-  (display "Opponent up card ")
-  (display opponent-up-card)
-  (newline)
-  (display "Your Total: ")
-  (display (hand-total your-hand))
-  (newline)
-  (display "Your Card List: ")
-  (display (hand-card-list your-hand))
-  (newline)
-  (user-wants-hit?))
+;; (define (hit? your-hand opponent-up-card)
+;;   (newline)
+;;   (display "Opponent up card ")
+;;   (display opponent-up-card)
+;;   (newline)
+;;   (display "Your Total: ")
+;;   (display (hand-total your-hand))
+;;   (newline)
+;;   (display "Your Card List: ")
+;;   (display (hand-card-list your-hand))
+;;   (newline)
+;;   (user-wants-hit?))
 
-(define (user-wants-hit?)
-  (let ((x (prompt-for-command-char "Hit? ")))
-    (display x)
-    (eq? x '#\y))) ;prompt-for-command char returns #\ before char
+;; (define (user-wants-hit?)
+;;   (let ((x (prompt-for-command-char "Hit? ")))
+;;     (display x)
+;;     (eq? x '#\y))) ;prompt-for-command char returns #\ before char
 
 ;;; Exercise 3
 (define (stop-at limit)
@@ -214,3 +214,19 @@
 ;; Value: 1
 
 ;;; Tutorial
+
+(define (new-deck)
+  ;; A list of all card values, including J Q K
+  (let ((type (list 1 2 3 4 5 6 7 8 9 10 10 10 10)))
+    (define (suit-complete? deck suit)
+      (if (null? deck)
+          #f
+          (and (= (remainder (length deck) 4) 0)
+               (= suit (car deck)))))
+    (define (iter t-needed deck)
+      (display t-needed)
+      (display newline)
+      (cond ((null? t-needed) deck)
+            ((suit-complete? deck (car t-needed)) (iter (cdr t-needed) deck))
+            (else (iter t-needed (cons (car t-needed) deck)))))
+    (iter type '())))
