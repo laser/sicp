@@ -1,3 +1,5 @@
+(load "src/Problem_Set_05_match.scm")
+(load "src/Problem_Set_05_adv.scm")
 (load "src/Problem_Set_05.scm")
 
 (in-test-group
@@ -13,3 +15,12 @@
    (assert-equal '((2 3) (4 6) (5 4) (1 2)) (proc '((1 2) (2 3) (4 6) (5 4) (1 2))) "only unique symbols remain...like some kind of set...make-set sounds good")
    (assert-equal '(1 5 6 2 3 4) (proc '(1 2 3 4 5 6 2 3 4)) "another example of how proc removes duplicates")
    (assert-equal '((+ 1 2 3) (* 1 2 3)) (proc '((+ 1 2 3) (* 1 2 3))) "get it yet?")))
+
+(in-test-group
+ ProblemSet5:CodingExercises
+ (define-each-test
+   (assert-equal 5 (length (all-prerequisites 'geo104)) "there should be five prerequisites for geo104")
+   (assert-true (check-circular-prerequisites '(geo104)) "no problem taking a class by itself")
+   (assert-true (check-circular-prerequisites '(eecs101 math101 phys101)) "no problem with no conflicts")
+   (assert-false (check-circular-prerequisites '(geo104 math203)) "detects conflicts")
+   (assert-equal 13 (total-credits '(eecs101 math101 phys101)) "works as intended")))

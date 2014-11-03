@@ -58,6 +58,8 @@
   '((you say)
     (why do you say)
     (i am glad to hear that)
+    (it is terrifying that)
+    (how dare you say)
     ()))
 
 (define (change-person phrase)
@@ -78,6 +80,7 @@
 (define general-advice
   '((make sure to take some humanities)
     (Burgundy has a lot of interesting departments)
+    (you have chosen poorly)
     (make sure to get time to explore the Boston area)
     (how about a freshman seminar)))
 
@@ -150,6 +153,33 @@
 (define (entry-satisfies entry) (list-ref entry 4))
 (define (entry-prerequisites entry) (list-ref entry 5))
 
+(define (all-prerequisites subject)
+  (let ((entry (find subject catalog)))
+    (if (null? entry)
+        '()
+        (let ((prereqs (entry-prerequisites entry)))
+        (if (null? prereqs) '()
+            (list-union prereqs (reduce list-union
+                                        '()
+                                        (map all-prerequisites
+                                             prereqs))))))))
+
+; for each class in classes, find its prerequisites, remove duplicates, and see if there's any intersection between the prereqs and the classes
+(define (check-circular-prerequisites classes)
+  (null? (list-intersection classes
+                            (reduce list-union
+                                    '()
+                                    (map all-prerequisites classes)))))
+
+(define (credits-for-class subject)
+  (let ((entry (find subject catalog)))
+    (if (null? entry) 0
+        (entry-units entry))))
+
+(define (total-credits classes)
+  (reduce +
+          0
+          (map credits-for-class classes)))
 
 (define catalog
   (list
@@ -329,7 +359,7 @@
 
 
 (define (find subject entries)
-  (cond ((null? entries) false)
+  (cond ((null? entries) '())
         ((eq? subject (entry-subject (car entries)))
          (car entries))
         (else
