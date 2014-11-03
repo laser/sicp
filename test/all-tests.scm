@@ -8,3 +8,4 @@
 (load "test/Optional_Assignments_02.scm")
 (load "test/Optional_Assignments_03.scm")
 (load "test/Problem_Set_05.scm")
+(load "test/Optional_Assignments_05.scm")
