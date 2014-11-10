@@ -53,7 +53,7 @@
   (display opponent-up-card)
   (newline)
   (display "Your Cards: ")
-  (display (card-list your-hand))
+  (display (list-of-cards your-hand))
   (display " Total: ")
   (display (hand-total your-hand))
   (newline)
@@ -117,7 +117,7 @@
 (define (hand-total hand)
   (car (cdr hand)))
 
-(define (card-list hand)
+(define (list-of-cards hand)
   (cdr (cdr hand)))
 
 (define (hand-add-card hand new-card)
