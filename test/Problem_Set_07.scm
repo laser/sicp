@@ -1,4 +1,4 @@
-(load "src/Problem_Set_Week_7.scm")
+(load "src/Problem_Set_07.scm")
 (in-test-group
 
   Problem_Set_Week_7
